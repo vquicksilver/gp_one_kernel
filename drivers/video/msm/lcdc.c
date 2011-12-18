@@ -102,6 +102,9 @@ static int lcdc_on(struct platform_device *pdev)
 #ifdef CONFIG_MSM_NPA_SYSTEM_BUS
 	pm_qos_rate = MSM_AXI_FLOW_MDP_LCDC_WVGA_2BPP;
 #else
+#ifdef CONFIG_MSM_FB_ENABLE_DBGFS
+	printk("panel_pixclock_freq = %lu\n", panel_pixclock_freq);
+#endif
 	if (panel_pixclock_freq > 65000000)
 		/* pm_qos_rate should be in Khz */
 		pm_qos_rate = panel_pixclock_freq / 1000 ;
@@ -114,6 +117,9 @@ static int lcdc_on(struct platform_device *pdev)
 
 	mfd->fbi->var.pixclock = clk_round_rate(pixel_mdp_clk,
 					mfd->fbi->var.pixclock);
+#ifdef CONFIG_MSM_FB_ENABLE_DBGFS
+        printk("panel_pixclock_freq after clk_round_rate = %lu\n", panel_pixclock_freq);
+#endif
 	ret = clk_set_rate(pixel_mdp_clk, mfd->fbi->var.pixclock);
 	if (ret) {
 		pr_err("%s: Can't set MDP LCDC pixel clock to rate %u\n",

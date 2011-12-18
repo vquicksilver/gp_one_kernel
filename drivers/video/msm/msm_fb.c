@@ -419,6 +419,28 @@ int msm_fb_detect_client(const char *name)
 	return ret;
 }
 
+#ifdef CONFIG_FB_MSM_REFRESH
+static int msmfb_refresh_thread(void *v)
+{
+       struct fb_info *info;
+       struct msm_fb_data_type * mfd;
+       
+       
+       daemonize("msmfb_refreshd");
+       allow_signal(SIGKILL);
+       
+       while (1) {
+               msleep(100);
+               
+               if (num_registered_fb > 0) {
+                       info = registered_fb[0];
+                       msm_fb_pan_display(&info->var, info);
+               }
+       }
+       
+       return 0;
+}
+#endif
 static ssize_t msm_fb_msm_fb_type(struct device *dev,
 				  struct device_attribute *attr, char *buf)
 {
@@ -540,6 +562,9 @@ static int msm_fb_probe(struct platform_device *pdev)
 	rc = msm_fb_register(mfd);
 	if (rc)
 		return rc;
+#ifdef CONFIG_FB_MSM_REFRESH
+	kernel_thread(msmfb_refresh_thread, NULL, CLONE_KERNEL);
+#endif
 
 #ifdef CONFIG_FB_BACKLIGHT
 	msm_fb_config_backlight(mfd);

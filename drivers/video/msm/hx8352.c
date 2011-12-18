@@ -379,7 +379,11 @@ static int __init lcdc_hx8352_init(void)
 	pinfo.pdest = DISPLAY_1;
 	pinfo.wait_cycle = 0;
 	pinfo.bpp = 16;
+#ifdef CONFIG_FB_MSM_HX8352_SINGLE_BUFFER
+	pinfo.fb_num = 1;
+#else
 	pinfo.fb_num = 2;
+#endif
 	pinfo.clk_rate = 6144000;
 /* FIH_ADQ added by Guorui*/
 	pinfo.bl_max=255;
