@@ -1,0 +1,11 @@
+config AR6K
+        bool 'Atheros AR6002 SDIO driver'
+        select WIRELESS_EXT
+        ---help---
+          Enable Atheros AR6002 driver.
+config AR6K_FW_PATH
+	depends on AR6K
+	string "Firmware path"
+	default "/system/etc/firmware/fw/"
+	---help---
+	  Path to the firmware file/s.

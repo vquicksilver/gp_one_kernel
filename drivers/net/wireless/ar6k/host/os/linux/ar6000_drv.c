@@ -105,28 +105,28 @@ struct wake_lock ar6k_init_wake_lock;
 struct wake_lock ar6k_wow_wake_lock;
 
 char *fm_path = NULL;
-char *tgt_fw = "/system/etc/wifi/fw/athwlan.bin.z77";
-char *tgt_patch = "/system/etc/wifi/fw/data.patch.hw2_0.bin";
-char *tcmd_fw = "/system/etc/wifi/fw/athtcmd_ram.bin";
-char *art_fw = "/system/etc/wifi/fw/device.bin";
-char *eeprom_bin = "/system/etc/wifi/fw/eeprom.bin";
-char *eeprom_data = "/system/etc/wifi/fw/eeprom.data";
+char *tgt_fw = CONFIG_AR6K_FW_PATH "athwlan.bin.z77";
+char *tgt_patch = CONFIG_AR6K_FW_PATH "data.patch.hw2_0.bin";
+char *tcmd_fw = CONFIG_AR6K_FW_PATH "athtcmd_ram.bin";
+char *art_fw = CONFIG_AR6K_FW_PATH "device.bin";
+char *eeprom_bin = CONFIG_AR6K_FW_PATH "eeprom.bin";
+char *eeprom_data = CONFIG_AR6K_FW_PATH "eeprom.data";
 
 
 #ifdef REGION_CODE_FILE_USED
-char *reg_file = "/system/etc/wifi/fw/reg_code";
+char *reg_file = CONFIG_AR6K_FW_PATH "reg_code";
 #else
 char *reg_file = NULL;
 #endif
 
 #ifdef SOFTMAC_USED
-char *softmac_file = "/system/etc/wifi/fw/softmac";
+char *softmac_file = CONFIG_AR6K_FW_PATH "softmac";
 #else
 char *softmac_file = NULL;
 #endif
 
 #ifdef EEPROM_FILE_USED
-char *eeprom_file = "/system/etc/wifi/fw/calData_ar6102_15dBm.bin";
+char *eeprom_file = CONFIG_AR6K_FW_PATH "calData_ar6102_15dBm.bin";
 /*char *eeprom_file = "/system/etc/wifi/fw/fakeBoardData_AR6002.bin"; */
 #else
 char *eeprom_file = NULL;
